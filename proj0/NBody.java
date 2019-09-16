@@ -2,26 +2,21 @@
 
 public class NBody{
 
-	/* background galaxy image: "images/starfield.jpg" */
-	public static String background = "images/starfield.jpg";
-	public static int numPlanet;
-	public static double radius;
-
 	/* This method reads galaxy radius from file: ex"data/planets.txt" 
 	*using data base In class
 	* The first int is the number of the bodys
 	* The second double is the galaxy radius*/
 	public static double readRadius (String route) {
 		In in = new In(route);
-		numPlanet = in.readInt();
-		radius = in.readDouble();
+		int numPlanet = in.readInt();
+		double radius = in.readDouble();
 		return radius;
 	}
 
 	/* This method reads plnaet data loop through the file: ex"data/planets.txt" */
 	public static Planet[] readPlanets(String route) {
 		In in = new In(route);
-		numPlanet = in.readInt();
+		int numPlanet = in.readInt();
 		double secondItemInFile = in.readDouble();
 		Planet[] p = new Planet[numPlanet];
 		for (int i=0; i < numPlanet; i++) {
@@ -41,12 +36,14 @@ public class NBody{
 	*StdDraw.clear(): clear image
 	*StdDraw.picture(at x,y position, filename, size: x,y)
 	*/
-	public static void drawBackground(double radius, String background) {
+	/*public static void drawBackground(double radius, String background) {
+
 		StdDraw.setScale(-radius, radius);
 		StdDraw.clear();
 		StdDraw.picture(0, 0, background, radius*2, radius*2);
 		StdDraw.show();
-	}
+	}*/
+
 
 	/*Input ex: java NBody 157788000.0 25000.0 data/planets.txt
 	first double: total simulate time
@@ -54,27 +51,26 @@ public class NBody{
 	third:	 txt file
 	*/
 	public static void main (String[] args) {
-        
-        //BufferedImage image = null; 
+
 		double T =Double.parseDouble(args [0]);
 		double dt = Double.parseDouble(args [1]);
 		String filename = args [2]; 
 		Planet[] Planets = readPlanets(filename);
 		double radius = readRadius(filename);
+		int numPlanet = Planets.length;
+		String background = "images/starfield.jpg";
 
-		drawBackground(radius, background);
+		//drawBackground(radius, background);
+		StdDraw.setScale(-radius, radius);
+		StdDraw.clear();
+		StdDraw.picture(0, 0, background, radius*2, radius*2);
+		StdDraw.show();
 
 		for (int i = 0; i < Planets.length; i++) {
                 Planets[i].draw();
          }
 
-		StdOut.printf("%d\n", Planets.length);
-		StdOut.printf("%.2e\n", radius);
-		for (int i = 0; i < Planets.length; i++) {
-    	StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
-                  Planets[i].xxPos, Planets[i].yyPos, Planets[i].xxVel,
-                  Planets[i].yyVel, Planets[i].mass, Planets[i].imgFileName);   
-		}
+		
 		 /*This is a graphics technique to prevent flickering in the animation. */
 		StdDraw.enableDoubleBuffering();
 
@@ -103,6 +99,14 @@ public class NBody{
 
 			StdDraw.show();
 			StdDraw.pause(10);
+		}
+
+		StdOut.printf("%d\n", Planets.length);
+		StdOut.printf("%.2e\n", radius);
+		for (int i = 0; i < Planets.length; i++) {
+    	StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
+                  Planets[i].xxPos, Planets[i].yyPos, Planets[i].xxVel,
+                  Planets[i].yyVel, Planets[i].mass, Planets[i].imgFileName);   
 		}
     }
 }

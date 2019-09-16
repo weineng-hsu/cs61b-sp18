@@ -6,15 +6,15 @@ public class Planet{
 	public double yyVel;
 	public double mass;
 	public String imgFileName;
-	public double xdis;
-	public double ydis;
-	public double dis;
+	//public double xdis;
+	//public double ydis;
+	//public double dis;
 	final static double G = 6.67*1e-11;
-	public double time;
+	//public double time;
 	//public double Fx;
 	//public double Fy;
-	public double Ax;
-	public double Ay;
+	//public double Ax;
+	//public double Ay;
 
 	/**Create a Planet with
 	*@param xP  X position of the planet
@@ -46,9 +46,9 @@ public class Planet{
 	* dis = (dx^2+dy^2)^0.5
 	*/
 	public double calcDistance(Planet p) {
-		xdis = this.xxPos-p.xxPos;
-		ydis = this.yyPos-p.yyPos;
-		dis = xdis*xdis + ydis*ydis;
+		double xdis = this.xxPos-p.xxPos;
+		double ydis = this.yyPos-p.yyPos;
+		double dis = xdis*xdis + ydis*ydis;
 		return Math.sqrt(dis);
 	}
 
@@ -102,10 +102,10 @@ public class Planet{
 	*@param Fy Fy excert on planet*/
 
 	public void update (double time, double Fx, double Fy) {
-		this.Ax = Fx / this.mass;
-		this.Ay = Fy / this.mass;
-		this.xxVel = this.xxVel + time * this.Ax;
-		this.yyVel = this.yyVel + time * this.Ay;
+		double Ax = Fx / this.mass;
+		double Ay = Fy / this.mass;
+		this.xxVel = this.xxVel + time * Ax;
+		this.yyVel = this.yyVel + time * Ay;
 		this.xxPos = this.xxPos + time * this.xxVel;
 		this.yyPos = this.yyPos + time * this.yyVel;
 	}
