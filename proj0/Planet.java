@@ -6,15 +6,8 @@ public class Planet{
 	public double yyVel;
 	public double mass;
 	public String imgFileName;
-	//public double xdis;
-	//public double ydis;
-	//public double dis;
-	final static double G = 6.67*1e-11;
-	//public double time;
-	//public double Fx;
-	//public double Fy;
-	//public double Ax;
-	//public double Ay;
+	private final static double G = 6.67*1e-11;
+
 
 	/**Create a Planet with
 	*@param xP  X position of the planet

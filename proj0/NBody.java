@@ -30,21 +30,6 @@ public class NBody{
 		} return p;
 	}
 
-	/* Draw background galaxy image: "images/starfield.jpg" 
-	* using StdDraw database
-	*StdDraw.setScale(a,b): set canvas from x:a-b, y:a-b
-	*StdDraw.clear(): clear image
-	*StdDraw.picture(at x,y position, filename, size: x,y)
-	*/
-	/*public static void drawBackground(double radius, String background) {
-
-		StdDraw.setScale(-radius, radius);
-		StdDraw.clear();
-		StdDraw.picture(0, 0, background, radius*2, radius*2);
-		StdDraw.show();
-	}*/
-
-
 	/*Input ex: java NBody 157788000.0 25000.0 data/planets.txt
 	first double: total simulate time
 	second double: dt
@@ -60,7 +45,11 @@ public class NBody{
 		int numPlanet = Planets.length;
 		String background = "images/starfield.jpg";
 
-		//drawBackground(radius, background);
+		/* Draw background galaxy image: "images/starfield.jpg" 
+		* using StdDraw database
+		*StdDraw.setScale(a,b): set canvas from x:a-b, y:a-b
+		*StdDraw.clear(): clear image
+		*StdDraw.picture(at x,y position, filename, size: x,y)*/
 		StdDraw.setScale(-radius, radius);
 		StdDraw.clear();
 		StdDraw.picture(0, 0, background, radius*2, radius*2);
