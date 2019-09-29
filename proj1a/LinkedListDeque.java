@@ -1,18 +1,18 @@
-public class LinkedListDeque <T> {
+public class LinkedListDeque<T> {
 
-    public class stufNode {
-        public T item;
-        public stufNode prev;
-        public stufNode next;
+    public class StufNode {
+        private T item;
+        private StufNode prev;
+        private StufNode next;
 
-        public stufNode(T i, stufNode m, stufNode n) {
+        public StufNode(T i, StufNode m, StufNode n) {
             item = i;
             prev = m;
             next = n;
         }
     }
 
-    private stufNode sentinel;
+    private StufNode sentinel;
     private int size;
 
     /** check linked list deque is empty or not
@@ -22,14 +22,15 @@ public class LinkedListDeque <T> {
         boolean check = true;
         if (this.size != 0) {
             check = false;
-        } return check;
+        }
+        return check;
     }
 
     /** Create a empty LLD.
      *
      */
     public LinkedListDeque() {
-        sentinel = new stufNode(null,null,null);
+        sentinel = new StufNode(null, null, null);
         sentinel.next = sentinel;
         sentinel.prev = sentinel;
         size = 0;
@@ -39,8 +40,8 @@ public class LinkedListDeque <T> {
      * @param item is the added item.
      */
     public void addFirst(T item) {
-        sentinel.next = new stufNode(item, sentinel, sentinel.next);
-        sentinel.next.next.prev=sentinel.next;
+        sentinel.next = new StufNode(item, sentinel, sentinel.next);
+        sentinel.next.next.prev = sentinel.next;
         size = size + 1;
     }
 
@@ -52,7 +53,7 @@ public class LinkedListDeque <T> {
         pt1.next.prev = null;
         pt1.next.next.prev = sentinel;
         pt1.next = pt1.next.next;
-        size -=1;
+        size -= 1;
         return sentinel.next.item;
     }
 
@@ -60,7 +61,7 @@ public class LinkedListDeque <T> {
      * @param item T is added at the end of the LLD.
      */
     public void addLast(T item) {
-        sentinel.prev = new stufNode(item, sentinel.prev, sentinel);
+        sentinel.prev = new StufNode(item, sentinel.prev, sentinel);
         sentinel.prev.prev.next = sentinel.prev;
         size = size + 1;
     }
@@ -69,7 +70,7 @@ public class LinkedListDeque <T> {
      * @return the T item in the end of LLD.
      */
     public T removeLast() {
-        stufNode pt1 = sentinel;
+        StufNode pt1 = sentinel;
         pt1.prev.prev.next = sentinel;
         pt1.prev = pt1.prev.prev;
         size -= 1;
@@ -88,10 +89,10 @@ public class LinkedListDeque <T> {
      * print out all the item in the LLD with a space.
      */
     public void printDeque() {
-        stufNode pt1 = sentinel;
+        StufNode pt1 = sentinel;
         for (int i = 0; i < size; i++) {
             pt1 = pt1.next;
-            System.out.print(pt1.item+" ");
+            System.out.print(pt1.item + " ");
         }
     }
 
@@ -101,10 +102,10 @@ public class LinkedListDeque <T> {
      * @return the nth item in the LLD.
      */
     public T get(int index) {
-        stufNode pt1 = sentinel;
+        StufNode pt1 = sentinel;
         for (int i = 0; i < index; i++) {
             pt1 = pt1.next;
-        }return pt1.item;
+        } return pt1.item;
     }
 
     /** Use recursive way to get the item in the LLD.
@@ -113,10 +114,10 @@ public class LinkedListDeque <T> {
      * @return the nth item in the LLD.
      */
     public T getRecursive(int index) {
-        if (index == 0 ) {
+        if (index == 0) {
             return sentinel.item;
         }
-        return getRecursiveHelper(sentinel,index);
+        return getRecursiveHelper(sentinel, index);
     }
 
     /** To help getRecursive method.
@@ -125,10 +126,11 @@ public class LinkedListDeque <T> {
      * @param n indicator for the remaining shrinking times.
      * @return the nth item in the LLD.
      */
-    public T getRecursiveHelper(stufNode m, int n) {
+    public T getRecursiveHelper(StufNode m, int n) {
         if (n == 0) {
             return m.item;
-        }return getRecursiveHelper(m.next,n-1);
+        }
+        return getRecursiveHelper(m.next, n - 1);
     }
 
     /**
@@ -149,4 +151,5 @@ public class LinkedListDeque <T> {
         System.out.println(L.getRecursive(1));
         L.printDeque();
     }*/
+    
 }
