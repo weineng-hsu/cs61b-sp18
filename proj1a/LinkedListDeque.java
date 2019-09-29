@@ -49,7 +49,7 @@ public class LinkedListDeque<T> {
      * @return T next to the removed item.
      */
     public T removeFirst() {
-        stufNode pt1 = sentinel;
+        StufNode pt1 = sentinel;
         pt1.next.prev = null;
         pt1.next.next.prev = sentinel;
         pt1.next = pt1.next.next;
