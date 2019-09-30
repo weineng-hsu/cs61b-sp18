@@ -5,7 +5,8 @@ public class ArrayDeque<T> {
     private int nextFirst;
     private int nextLast;
     private int arraySize;
-    private int pointer;
+    private int printPointer;
+    private int getPointer;
 
     public ArrayDeque() {
         size = 0;
@@ -85,14 +86,17 @@ public class ArrayDeque<T> {
     }
 
     public int size() {
+        if (size < 0){
+            size = 0;
+        }
         return size;
     }
 
    public void printDeque() {
-        pointer = nextFirst;
+       printPointer = nextFirst;
         for (int i = 0; i < size; i++) {
-            System.out.print(items[plusOne(pointer)]+" ");
-            pointer = plusOne(pointer);
+            System.out.print(items[plusOne(printPointer)]+" ");
+            printPointer = plusOne(printPointer);
         } System.out.println();
     }
 
@@ -109,36 +113,42 @@ public class ArrayDeque<T> {
     }
 
     private void checkShrink (int capacity) {
-        if (arraySize / 4 > size & arraySize > 8) {
+        if (arraySize / 2 > size & arraySize > 8) {
             T[] a = (T[]) new Object[capacity];
             if (nextFirst > nextLast) {
-                System.arraycopy(items, nextFirst + 1, a, capacity / 4, items.length - nextFirst - 1);
-                System.arraycopy(items, 0, a, capacity / 4 + items.length - nextFirst - 1, nextLast - 1);
+                System.arraycopy(items, plusOne(nextFirst), a, 0, items.length - plusOne(nextFirst));
+                System.arraycopy(items, 0, a, items.length - plusOne(nextFirst), size - items.length + plusOne(nextFirst));
                 items = a;
-                nextFirst = (capacity / 4) - 1;
-                nextLast = nextFirst + size + 1;
+                nextFirst = minusOne(0);
+                nextLast = size;
+                arraySize = arraySize / 2;
             }
             if (nextFirst < nextLast) {
-                System.arraycopy(items, nextFirst + 1, a, capacity / 4, size);
+                System.arraycopy(items, plusOne(nextFirst), a, 0, size);
                 items = a;
-                nextFirst = (capacity / 4) - 1;
-                nextLast = nextFirst + size + 1;
+                nextFirst = minusOne(0);
+                nextLast = size;
+                arraySize = arraySize / 2;
             }
         }
     }
 
     public T get(int index) {
-        return items [index];
+        getPointer = nextFirst;
+        for (int i = -1; i < index; i++) {
+            getPointer = plusOne(nextFirst);
+        }
+        return items[getPointer];
     }
 
-    public int minusOne(int index) {
+    private int minusOne(int index) {
         index = index - 1;
         if (index < 0) {
             index = arraySize - 1;
         }return index;
     }
 
-    public int plusOne(int index) {
+    private int plusOne(int index) {
         index = index + 1;
         if (index > arraySize - 1) {
             index = 0;
@@ -148,44 +158,18 @@ public class ArrayDeque<T> {
 /**Uncomment for autoGrader.
     public static void main (String[] args){
         ArrayDeque<Integer> L = new ArrayDeque();
-        //L.addLast(2);
-        //L.addLast(3);
+        L.addLast(2);
+        L.addLast(3);
         //L.addFirst(1);
-        L.addFirst(1);
-        L.addFirst(2);
-        L.addFirst(3);
-        L.addFirst(4);
-        L.addFirst(5);
-        L.addFirst(6);
+        L.removeLast();
+        L.removeLast();
         //L.removeFirst();
-        //L.removeFirst();
-        L.addLast(0);
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.addLast(-1);
-        L.addLast(-2);
-        L.addLast(-3);
-        L.addLast(-4);
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeLast();
-        L.removeLast();
-        L.removeLast();
-        L.addLast(-6);
-        L.addLast(-7);
-        L.removeLast();
-        L.removeFirst();
-        L.printDeque();
+        //L.printDeque();
         //System.out.println(L.removeFirst());
         //System.out.println(L.removeLast());
         //System.out.println(L.size());
         //System.out.println(L.get(9));
         //System.out.println(L.isEmpty());
-    }*/
+    } */
 
 }
