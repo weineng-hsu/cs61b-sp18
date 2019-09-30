@@ -1,13 +1,21 @@
+/**
+ * Array based linked data structure and it is created to be Circular ArrayDeque.
+ * @Rule: Add and remove must take constant time, except during resizing operations.
+ * @Rule: Start with a 8 size of array.
+ * @Rule: should also shrink when array is too big.
+ */
+
 public class ArrayDeque<T> {
 
-    private int size;
+    private int size;           //The size of the array.
     private T[] items;
-    private int nextFirst;
-    private int nextLast;
-    private int arraySize;
-    private int printPointer;
-    private int getPointer;
+    private int nextFirst;      //Pointer to the first of the array.
+    private int nextLast;       //Pointer to the last of the array.
+    private int arraySize;      //shows to size of the array.
+    private int printPointer;   //Pointer to print out all the items in the array.
+    private int getPointer;     //Pointer to get method.
 
+    /** Create an empty array, size of 8.*/
     public ArrayDeque() {
         size = 0;
         nextFirst = 3;
@@ -16,6 +24,9 @@ public class ArrayDeque<T> {
         arraySize = 8;
     }
 
+    /** Add item into the array at the end.
+     * @param item the item add into the list.
+     */
     public void addFirst(T item) {
         checkExpand(arraySize * 2);
         items[nextFirst] = item;
@@ -23,84 +34,67 @@ public class ArrayDeque<T> {
         size += 1;
     }
 
+    /** Remove item into the array at the end.*/
     public T removeFirst() {
-        T First = items[plusOne(nextFirst)];
+        T first = items[plusOne(nextFirst)];
         items[plusOne(nextFirst)] = null;
         size -= 1;
         nextFirst = plusOne(nextFirst);
-        checkShrink(arraySize * 1/2);
-        return  First;
-        /**
-        if (nextFirst == arraySize - 1) {
-            T First = items[0];
-            items[0] = null;
-            size -= 1;
-            nextFirst = plusOne(nextFirst);
-            checkShrink(arraySize * 1/2);
-            return First;
-        }
-        T First = items[nextFirst + 1];
-        items[nextFirst + 1] = null;
-        size -= 1;
-        nextFirst = plusOne(nextFirst);
-        checkShrink(arraySize * 1/2);
-        return First;*/
+        checkShrink(arraySize * 1 / 2);
+        return  first;
     }
 
+    /** Add item into the array at front.
+     * @param item the item add into the list.
+     */
     public void addLast(T item) {
-        checkExpand(arraySize*2);
+        checkExpand(arraySize * 2);
         items[nextLast] = item;
         nextLast = plusOne(nextLast);
         size += 1;
     }
 
+    /** Remove item into the array at the front.*/
     public T removeLast() {
-        T First = items[minusOne(nextLast)];
+        T first = items[minusOne(nextLast)];
         items[minusOne(nextLast)] = null;
         size -= 1;
         nextLast = minusOne(nextLast);
         checkShrink(arraySize * 1/2);
-        return  First;
-        /**
-        if (nextLast == 0) {
-            T Last = items[7];
-            items[7] = null;
-            size -= 1;
-            nextLast = minusOne(nextLast);
-            checkShrink(arraySize * 1/2);
-            return Last;
-        }
-        T Last = items[nextLast - 1];
-        items[nextLast - 1] = null;
-        size -= 1;
-        nextLast = minusOne(nextLast);
-        checkShrink(arraySize * 1/2);
-        return Last;*/
+        return  first;
     }
 
+    /** Check if the array is empty.
+     *
+     * @return false when array is not empty.
+     */
     public boolean isEmpty() {
         boolean check = true;
-        if (size != 0){
+        if (size != 0) {
             check = false;
-        } return check;
+        }
+        return check;
     }
 
+    /*Return the size of the array.*/
     public int size() {
-        if (size < 0){
+        if (size < 0) {
             size = 0;
         }
         return size;
     }
 
-   public void printDeque() {
-       printPointer = nextFirst;
-        for (int i = 0; i < size; i++) {
-            System.out.print(items[plusOne(printPointer)]+" ");
+    /* Prints the items in the deque from first to last, separated by a space.*/
+    public void printDeque() {
+        printPointer = nextFirst;
+        for (int i = 0; i < size; i ++ ) {
+            System.out.print(items[plusOne(printPointer)] + " ");
             printPointer = plusOne(printPointer);
         } System.out.println();
     }
 
-    private void checkExpand (int capacity) {
+    /* Expand the array by two times when only one space left.*/
+    private void checkExpand(int capacity) {
         if (nextFirst == nextLast) {
             T[] a = (T[]) new Object[capacity];
             System.arraycopy(items, nextFirst + 1, a, capacity / 4, items.length - nextFirst - 1);
@@ -111,13 +105,15 @@ public class ArrayDeque<T> {
             arraySize = arraySize * 2;
         }
     }
-
-    private void checkShrink (int capacity) {
+    /* Shrink the array by half when half of the array is left.*/
+    private void checkShrink(int capacity) {
         if (arraySize / 2 > size & arraySize > 8) {
             T[] a = (T[]) new Object[capacity];
             if (nextFirst > nextLast) {
-                System.arraycopy(items, plusOne(nextFirst), a, 0, items.length - plusOne(nextFirst));
-                System.arraycopy(items, 0, a, items.length - plusOne(nextFirst), size - items.length + plusOne(nextFirst));
+                System.arraycopy(items, plusOne(nextFirst),
+                        a, 0, items.length - plusOne(nextFirst));
+                System.arraycopy(items, 0, a, items.length - plusOne(nextFirst),
+                        size - items.length + plusOne(nextFirst));
                 items = a;
                 arraySize = arraySize / 2;
                 nextFirst = minusOne(0);
@@ -133,25 +129,33 @@ public class ArrayDeque<T> {
         }
     }
 
+    /**Returns the index-th items in the array
+     *
+     * @param index the ith items in the array.
+     */
     public T get(int index) {
         getPointer = plusOne(nextFirst) + index;
         if (getPointer >= items.length) {
             getPointer = getPointer - arraySize;
-        }return items[getPointer];
+        }
+        return items[getPointer];
     }
 
+    /* Deal with the nextFirst/nextLast pointer when pointer decrease. */
     private int minusOne(int index) {
         index = index - 1;
         if (index < 0) {
             index = arraySize - 1;
-        }return index;
+        }
+        return index;
     }
-
+    /* Deal with the nextFirst/nextLast pointer when pointer increase. */
     private int plusOne(int index) {
         index = index + 1;
         if (index > arraySize - 1) {
             index = 0;
-        } return index;
+        }
+        return index;
     }
 
 /**Uncomment for autoGrader.
