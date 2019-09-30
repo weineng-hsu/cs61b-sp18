@@ -134,11 +134,10 @@ public class ArrayDeque<T> {
     }
 
     public T get(int index) {
-        getPointer = nextFirst;
-        for (int i = -1; i < index; i++) {
-            getPointer = plusOne(nextFirst);
-        }
-        return items[getPointer];
+        getPointer = plusOne(nextFirst) + index;
+        if (getPointer >= items.length) {
+            getPointer = getPointer - arraySize;
+        }return items[getPointer];
     }
 
     private int minusOne(int index) {
@@ -158,8 +157,27 @@ public class ArrayDeque<T> {
 /**Uncomment for autoGrader.
     public static void main (String[] args){
         ArrayDeque<Integer> L = new ArrayDeque();
+        L.addLast(1);
         L.addLast(2);
         L.addLast(3);
+        L.addLast(4);
+        L.addLast(5);
+        L.addLast(6);
+        L.addLast(7);
+        L.get(0);
+        L.get(1);
+        L.get(2);
+        L.get(3);
+        L.get(4);
+        L.get(5);
+        L.get(6);
+        System.out.println(L.get(0));
+        System.out.println(L.get(1));
+        System.out.println(L.get(2));
+        System.out.println(L.get(3));
+        System.out.println(L.get(4));
+        System.out.println(L.get(5));
+        System.out.println(L.get(6));
         //L.addFirst(1);
         L.removeLast();
         L.removeLast();
@@ -170,6 +188,6 @@ public class ArrayDeque<T> {
         //System.out.println(L.size());
         //System.out.println(L.get(9));
         //System.out.println(L.isEmpty());
-    } */
+    }*/
 
 }
