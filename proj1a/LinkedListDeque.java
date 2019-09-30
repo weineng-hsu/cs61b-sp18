@@ -119,8 +119,8 @@ public class LinkedListDeque<T> {
      * @return the nth item in the LLD.
      */
     public T getRecursive(int index) {
-        if (index == -1) {
-            return sentinel.item;
+        if (index == 0) {
+            return sentinel.next.item;
         }
         return getRecursiveHelper(sentinel, index);
     }
@@ -133,7 +133,7 @@ public class LinkedListDeque<T> {
      */
     private T getRecursiveHelper(StufNode m, int n) {
         if (n == 0) {
-            return m.item;
+            return m.next.item;
         }
         return getRecursiveHelper(m.next, n - 1);
     }
@@ -143,6 +143,10 @@ public class LinkedListDeque<T> {
         LinkedListDeque<Integer> L  = new LinkedListDeque();
 
         L.addFirst(0);
+        L.addLast(1);
+        L.addLast(2);
+        L.getRecursive(1);
+        System.out.println(L.getRecursive(1));
         L.addLast(1);
         L.addLast(2);
         L.getRecursive(1);
@@ -157,6 +161,7 @@ public class LinkedListDeque<T> {
         //System.out.println(L.getRecursive(1));
         //L.printDeque();
     }*/
+
 
 
 }
