@@ -117,7 +117,7 @@ public class LinkedListDeque <T> {
      * @param index Give the nth item in the LLD.
      * @return the nth item in the LLD.
      */
-    private T getRecursive(int index) {
+    public T getRecursive(int index) {
         if (index == 0) {
             return sentinel.item;
         }
@@ -130,7 +130,7 @@ public class LinkedListDeque <T> {
      * @param n indicator for the remaining shrinking times.
      * @return the nth item in the LLD.
      */
-    public T getRecursiveHelper(stufNode m, int n) {
+    private T getRecursiveHelper(stufNode m, int n) {
         if (n == 0) {
             return m.item;
         }return getRecursiveHelper(m.next,n-1);
