@@ -60,7 +60,7 @@ public class ArrayDeque<T> {
         items[minusOne(nextLast)] = null;
         size -= 1;
         nextLast = minusOne(nextLast);
-        checkShrink(arraySize * 1/2);
+        checkShrink(arraySize * 1 / 2);
         return  first;
     }
 
@@ -87,7 +87,7 @@ public class ArrayDeque<T> {
     /* Prints the items in the deque from first to last, separated by a space.*/
     public void printDeque() {
         printPointer = nextFirst;
-        for (int i = 0; i < size; i ++ ) {
+        for (int i = 0; i < size; i++) {
             System.out.print(items[plusOne(printPointer)] + " ");
             printPointer = plusOne(printPointer);
         } System.out.println();
