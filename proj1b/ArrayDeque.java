@@ -1,7 +1,7 @@
-//import java.util.Queue;
+/**import java.util.Queue;*/
 /**
  * Array based linked data structure and it is created to be Circular.
- * @Rule: Add and remove must take constant time, except during resizing operations.
+ * @Rule: Add and remove must take constant time, except during resizing.
  * @Rule: Start with a 8 size of array.
  * @Rule: should also shrink when array is too big.
  */
@@ -15,7 +15,9 @@ public class ArrayDeque<T> implements Deque<T> {
     private int printPointer;   //Pointer to print out all the items in the array.
     private int getPointer;     //Pointer to get method.
 
-    /** Create an empty array, size of 8.*/
+    /**
+     * Create an empty array, size of 8.
+     */
     public ArrayDeque() {
         size = 0;
         nextFirst = 3;
@@ -24,7 +26,9 @@ public class ArrayDeque<T> implements Deque<T> {
         arraySize = 8;
     }
 
-    /** Add item into the array at the end.
+    /**
+     * Add item into the array at the end.
+     *
      * @param item the item add into the list.
      */
     @Override
@@ -35,7 +39,9 @@ public class ArrayDeque<T> implements Deque<T> {
         size += 1;
     }
 
-    /** Remove item into the array at the end.*/
+    /**
+     * Remove item into the array at the end.
+     */
     @Override
     public T removeFirst() {
         T first = items[plusOne(nextFirst)];
@@ -43,10 +49,12 @@ public class ArrayDeque<T> implements Deque<T> {
         size -= 1;
         nextFirst = plusOne(nextFirst);
         checkShrink(arraySize * 1 / 2);
-        return  first;
+        return first;
     }
 
-    /** Add item into the array at front.
+    /**
+     * Add item into the array at front.
+     *
      * @param item the item add into the list.
      */
     @Override
@@ -57,7 +65,9 @@ public class ArrayDeque<T> implements Deque<T> {
         size += 1;
     }
 
-    /** Remove item into the array at the front.*/
+    /**
+     * Remove item into the array at the front.
+     */
     @Override
     public T removeLast() {
         T first = items[minusOne(nextLast)];
@@ -65,10 +75,11 @@ public class ArrayDeque<T> implements Deque<T> {
         size -= 1;
         nextLast = minusOne(nextLast);
         checkShrink(arraySize * 1 / 2);
-        return  first;
+        return first;
     }
 
-    /** Check if the array is empty.
+    /**
+     * Check if the array is empty.
      *
      * @return false when array is not empty.
      */
@@ -97,10 +108,13 @@ public class ArrayDeque<T> implements Deque<T> {
         for (int i = 0; i < size; i++) {
             System.out.print(items[plusOne(printPointer)] + " ");
             printPointer = plusOne(printPointer);
-        } System.out.println();
+        }
+        System.out.println();
     }
 
-    /** Expand the array by two times when only one space left.*/
+    /**
+     * Expand the array by two times when only one space left.
+     */
     private void checkExpand(int capacity) {
         if (nextFirst == nextLast) {
             T[] a = (T[]) new Object[capacity];
@@ -112,6 +126,7 @@ public class ArrayDeque<T> implements Deque<T> {
             arraySize = arraySize * 2;
         }
     }
+
     /* Shrink the array by half when half of the array is left.*/
     private void checkShrink(int capacity) {
         if (arraySize / 2 > size & arraySize > 8) {
@@ -136,7 +151,8 @@ public class ArrayDeque<T> implements Deque<T> {
         }
     }
 
-    /**Returns the index-th items in the array
+    /**
+     * Returns the index-th items in the array
      *
      * @param index the ith items in the array.
      */
@@ -157,6 +173,7 @@ public class ArrayDeque<T> implements Deque<T> {
         }
         return index;
     }
+
     /* Deal with the nextFirst/nextLast pointer when pointer increase. */
     private int plusOne(int index) {
         index = index + 1;

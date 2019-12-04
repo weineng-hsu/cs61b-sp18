@@ -1,9 +1,9 @@
 public class Palindrome {
 
-    public Deque<Character> wordToDeque(String word){
+    public Deque<Character> wordToDeque(String word) {
         Deque<Character> d = new LinkedListDeque();
-        /**works just fine
-        Deque<Character> d = new ArrayDeque<Character>(); */
+        /** Bellow works just fine.
+         Deque<Character> d = new ArrayDeque<Character>(); */
         for (int i = 0; i < word.length(); i++) {
             d.addLast(word.charAt(i));
         }
@@ -28,7 +28,7 @@ public class Palindrome {
         if (wordD.size() < 2) {
             return true;
         }
-        if (!cc.equalChars(first(wordD),last(wordD))) {
+        if (!cc.equalChars(first(wordD), last(wordD))) {
             return false;
         }
         return isPalindrome(getRidOf(w), cc);
@@ -44,7 +44,7 @@ public class Palindrome {
         return last;
     }
 
-    private String getRidOf(String word){
+    private String getRidOf(String word) {
         return word.substring(1, word.length() - 1);
     }
 }

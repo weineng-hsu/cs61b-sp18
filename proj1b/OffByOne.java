@@ -3,9 +3,9 @@ public class OffByOne implements CharacterComparator {
     public boolean equalChars(char x, char y) {
         int a = x;
         int b = y;
-        if ( Math.abs(a - b) > 2 || Math.abs(a - b) == 0) {
+        if (Math.abs(a - b) > 1 || Math.abs(a - b) == 0) {
             return false;
-        } else
+        }
         return true;
     }
 }

@@ -1,4 +1,5 @@
 public class OffByN implements CharacterComparator {
+
     private int count;
 
     public OffByN(int n) {
@@ -10,13 +11,16 @@ public class OffByN implements CharacterComparator {
         int a = x;
         int b = y;
         int c = count;
-        if (Math.abs(a-b) == c) {
+        if (Math.abs(a - b) == c) {
             return true;
-        } return false;
+        }
+        return false;
     }
     /**public static void main (String[] args) {
-        OffByN offBy5 = new OffByN(5);
-        offBy5.equalChars('a', 'f');
-        System.out.println(offBy5.equalChars('a', 'f'));
-    }*/
+     OffByN offBy5 = new OffByN(5);
+     offBy5.equalChars('a', 'f');
+     System.out.println(offBy5.equalChars('a', 'f'));
+     }*/
 }
+
+

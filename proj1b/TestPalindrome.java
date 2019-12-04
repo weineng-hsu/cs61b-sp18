@@ -5,8 +5,8 @@ public class TestPalindrome {
     // You must use this palindrome, and not instantiate
     // new Palindromes, or the autograder might be upset.
     static Palindrome palindrome = new Palindrome();
-    static CharacterComparator cc1 = new OffByOne() ;
-    static CharacterComparator cc3 = new OffByN(3) ;
+    static CharacterComparator cc1 = new OffByOne();
+    static CharacterComparator cc3 = new OffByN(3);
 
     @Test
     public void testWordToDeque() {
@@ -46,10 +46,10 @@ public class TestPalindrome {
         String c = "a";
         String d = "aab";
         //Boolean aEXP = palindrome.isPalindrome(a,cc1);
-        assertTrue(palindrome.isPalindrome(a,cc1));
-        assertFalse(palindrome.isPalindrome(b,cc1));
-        assertTrue(palindrome.isPalindrome(c,cc1));
-        assertTrue(palindrome.isPalindrome(d,cc1));
+        assertTrue(palindrome.isPalindrome(a, cc1));
+        assertFalse(palindrome.isPalindrome(b, cc1));
+        assertTrue(palindrome.isPalindrome(c, cc1));
+        assertTrue(palindrome.isPalindrome(d, cc1));
     }
 
     @Test
@@ -58,9 +58,9 @@ public class TestPalindrome {
         String b = "frake";
         String c = "a";
         String d = "";
-        assertTrue(palindrome.isPalindrome(a,cc3));
-        assertFalse(palindrome.isPalindrome(b,cc3));
-        assertTrue(palindrome.isPalindrome(c,cc3));
-        assertTrue(palindrome.isPalindrome(d,cc3));
+        assertTrue(palindrome.isPalindrome(a, cc3));
+        assertFalse(palindrome.isPalindrome(b, cc3));
+        assertTrue(palindrome.isPalindrome(c, cc3));
+        assertTrue(palindrome.isPalindrome(d, cc3));
     }
 }
