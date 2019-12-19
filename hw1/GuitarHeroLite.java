@@ -1,4 +1,4 @@
-import synthesizer.GuitarString;
+//import synthesizer.GuitarString;
 
 /** A client that uses the synthesizer package to replicate a plucked guitar string sound */
 public class GuitarHeroLite {
