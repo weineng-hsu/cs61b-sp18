@@ -16,7 +16,7 @@ public interface BoundedQueue<T> extends Iterable<T> {
     }
 
     default boolean isFull() {
-        if (this.fillCount() != this.capacity()) {
+        if (fillCount() != capacity()) {
             return false;
         }
         return true;
