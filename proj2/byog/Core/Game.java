@@ -79,7 +79,7 @@ public class Game {
         switch (checkMenu) {
             case 'n':
                 seed = readInputSeed(input);
-                gameBoard = loadWorld();
+                gameBoard = new World(seed, HEIGHT, WIDTH).getGrid();
                 initialPlayer();
                 break;
             case 'l':
