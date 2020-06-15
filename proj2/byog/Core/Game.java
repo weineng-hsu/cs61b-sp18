@@ -40,7 +40,6 @@ public class Game {
     public void playWithKeyboard() {
         StdDraw.enableDoubleBuffering();
         welcomeAndReadSeed();
-        long seed;
         if (newGame) {
             seed = readInputSeed(seedString);
             gameBoard = new World(seed, HEIGHT, WIDTH).getGrid();
@@ -129,7 +128,7 @@ public class Game {
 
 
     private TETile[][] loadWorld() {
-        File f = new File("./maze.ser");
+        File f = new File("maze.ser");
         if (f.exists()) {
             try {
                 FileInputStream fs = new FileInputStream(f);
@@ -220,7 +219,7 @@ public class Game {
     }
 
     private void saveWorld(TETile[][] w) {
-        File f = new File("./maze.ser");
+        File f = new File("maze.ser");
         try {
             if (!f.exists()) {
                 f.createNewFile();
@@ -331,7 +330,7 @@ public class Game {
         StdDraw.setPenColor(StdDraw.WHITE);
         StdDraw.textLeft(1, HEIGHT - 1, mouseTile.description());
         StdDraw.show();
-        StdDraw.pause(500);
+        StdDraw.pause(100);
 
 
     }
