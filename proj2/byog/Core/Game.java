@@ -1,20 +1,29 @@
 package byog.Core;
 
+
+import java.awt.Color;
+import java.awt.Font;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Random;
+
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
-import edu.princeton.cs.introcs.StdDraw;
 
-import java.awt.*;
-import java.io.*;
-import java.util.Random;
+import edu.princeton.cs.introcs.StdDraw;
 
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
-    private static int seed;
+    private static long seed;
     private TETile[][] gameBoard;
     private int playerPosX;
     private int playerPosY;
@@ -31,15 +40,15 @@ public class Game {
     public void playWithKeyboard() {
         StdDraw.enableDoubleBuffering();
         welcomeAndReadSeed();
+        long seed;
         if (newGame) {
-            int seed = readInputSeed(seedString);
+            seed = readInputSeed(seedString);
             gameBoard = new World(seed, HEIGHT, WIDTH).getGrid();
             initialPlayer();
-        }
-        else if (loadGame) {
+        } else if (loadGame) {
             gameBoard = loadWorld();
         }
-        ter.initialize(WIDTH,HEIGHT);
+        ter.initialize(WIDTH, HEIGHT);
         ter.renderFrame(gameBoard);
         while (true) {
             if (StdDraw.hasNextKeyTyped()) {
@@ -66,10 +75,7 @@ public class Game {
      * @return the 2D TETile[][] representing the state of the world
      */
     public TETile[][] playWithInputString(String input) {
-        // TODO: Fill out this method to run the game using the input passed in,
-        // and return a 2D tile representation of the world that would have been
-        // drawn if the same inputs had been given to playWithKeyboard().
-        //World finalWorld = new World();
+
         char checkMenu = Character.toLowerCase(input.charAt(0));
         switch (checkMenu) {
             case 'n':
@@ -85,6 +91,7 @@ public class Game {
                 System.out.println("Come back later");
                 System.exit(0);
                 break;
+            default:
         }
         playerMove(input);
         saveWorld(gameBoard);
@@ -94,10 +101,10 @@ public class Game {
     private void drawWelcomeBoard() {
         StdDraw.clear(Color.BLACK);
         StdDraw.setPenColor(Color.white);
-        Font header = new Font ("Monaco", Font.BOLD, 30);
+        Font header = new Font("Monaco", Font.BOLD, 30);
         StdDraw.setFont(header);
         StdDraw.text(0.5, 0.8, "CS61B: THE GAME");
-        Font menu = new Font ("Arial", Font.PLAIN, 20);
+        Font menu = new Font("Arial", Font.PLAIN, 20);
         StdDraw.setFont(menu);
         StdDraw.text(0.5, 0.5, "New Game (N)");
         StdDraw.text(0.5, 0.45, "Load Game (L)");
@@ -112,9 +119,9 @@ public class Game {
     private void drawWinBoard() {
         StdDraw.clear(Color.BLACK);
         StdDraw.setPenColor(Color.white);
-        Font header = new Font ("Monaco", Font.BOLD, 40);
+        Font header = new Font("Monaco", Font.BOLD, 40);
         StdDraw.setFont(header);
-        StdDraw.text(WIDTH/2, HEIGHT/2, "Congrats, YOU WON!!!! ");
+        StdDraw.text(WIDTH / 2, HEIGHT / 2, "Congrats, YOU WON!!!! ");
         StdDraw.show();
         StdDraw.pause(5000);
         System.exit(0);
@@ -142,7 +149,7 @@ public class Game {
         return gameBoard;
     }
 
-    private int readInputSeed(String input) {
+    private long readInputSeed(String input) {
         StringBuilder seedBuilder = new StringBuilder();
         for (int i = 0; i < input.length(); i++) {
             char toCheck = input.charAt(i);
@@ -150,7 +157,7 @@ public class Game {
                 seedBuilder.append(toCheck);
             }
         }
-        return Integer.parseInt(seedBuilder.toString());
+        return Long.parseLong(seedBuilder.toString());
     }
 
     private void playerMove(String input) {
@@ -179,6 +186,8 @@ public class Game {
                         playerPosX += 1;
                         //System.out.println("Right");
                         break;
+                    default:
+                        break;
                 }
                 checkWin();
                 if (winning) {
@@ -194,13 +203,17 @@ public class Game {
     private boolean checkPlayerMove(char dir) {
         switch (dir) {
             case 'w':
-                return gameBoard[playerPosX][playerPosY + 1].equals(Tileset.FLOOR) || gameBoard[playerPosX][playerPosY + 1].equals(Tileset.LOCKED_DOOR);
+                return gameBoard[playerPosX][playerPosY + 1].equals(Tileset.FLOOR)
+                        || gameBoard[playerPosX][playerPosY + 1].equals(Tileset.LOCKED_DOOR);
             case 'a':
-                return gameBoard[playerPosX - 1][playerPosY].equals(Tileset.FLOOR) || gameBoard[playerPosX - 1][playerPosY].equals(Tileset.LOCKED_DOOR);
+                return gameBoard[playerPosX - 1][playerPosY].equals(Tileset.FLOOR)
+                        || gameBoard[playerPosX - 1][playerPosY].equals(Tileset.LOCKED_DOOR);
             case 's':
-                return gameBoard[playerPosX ][playerPosY - 1].equals(Tileset.FLOOR) || gameBoard[playerPosX ][playerPosY - 1].equals(Tileset.LOCKED_DOOR);
+                return gameBoard[playerPosX ][playerPosY - 1].equals(Tileset.FLOOR)
+                        || gameBoard[playerPosX ][playerPosY - 1].equals(Tileset.LOCKED_DOOR);
             case 'd':
-                return gameBoard[playerPosX + 1][playerPosY].equals(Tileset.FLOOR) || gameBoard[playerPosX + 1][playerPosY].equals(Tileset.LOCKED_DOOR);
+                return gameBoard[playerPosX + 1][playerPosY].equals(Tileset.FLOOR)
+                        || gameBoard[playerPosX + 1][playerPosY].equals(Tileset.LOCKED_DOOR);
             default:
                 return false;
         }
