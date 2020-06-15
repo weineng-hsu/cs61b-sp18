@@ -128,7 +128,7 @@ public class Game {
 
 
     private TETile[][] loadWorld() {
-        File f = new File("maze.ser");
+        File f = new File("maze.txt");
         if (f.exists()) {
             try {
                 FileInputStream fs = new FileInputStream(f);
@@ -219,7 +219,7 @@ public class Game {
     }
 
     private void saveWorld(TETile[][] w) {
-        File f = new File("maze.ser");
+        File f = new File("maze.txt");
         try {
             if (!f.exists()) {
                 f.createNewFile();
