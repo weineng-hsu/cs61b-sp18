@@ -52,7 +52,7 @@ public class Game {
         while (true) {
             if (StdDraw.hasNextKeyTyped()) {
                 char c = StdDraw.nextKeyTyped();
-                playerMove(Character.toString(c));
+                playerMoveUI(Character.toString(c));
                 saveWorld(gameBoard);
                 ter.renderFrame(gameBoard);
             }
@@ -188,13 +188,46 @@ public class Game {
                     default:
                         break;
                 }
+                gameBoard[playerPosX][playerPosY] = Tileset.PLAYER;
+            }
+        }
+    }
+
+    private void playerMoveUI(String input) {
+        if (input == null) {
+            System.out.println("no input given");
+            System.exit(0);
+        }
+        for (int i = 0; i < input.length(); i++) {
+            char dir = input.charAt(i);
+            if (checkPlayerMove(dir)) {
+                gameBoard[playerPosX][playerPosY] = Tileset.FLOOR;
+                switch (dir) {
+                    case 'w':
+                        playerPosY += 1;
+                        //System.out.println("UP");
+                        break;
+                    case 'a':
+                        playerPosX -= 1;
+                        //System.out.println("LEFT");
+                        break;
+                    case 's':
+                        playerPosY -= 1;
+                        //System.out.println("DOWN");
+                        break;
+                    case 'd':
+                        playerPosX += 1;
+                        //System.out.println("Right");
+                        break;
+                    default:
+                        break;
+                }
                 checkWin();
                 if (winning) {
                     drawWinBoard();
                 } else {
                     gameBoard[playerPosX][playerPosY] = Tileset.PLAYER;
                 }
-
             }
         }
     }

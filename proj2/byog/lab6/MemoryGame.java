@@ -156,6 +156,7 @@ public class MemoryGame {
                 int completed = round - 1;
                 drawFrame("Game Over! You made it to round: " + completed);
                 gameOver = true;
+                System.exit(0);
             } else {
                 round += 1;
                 drawFrame("Correct, well done!");
