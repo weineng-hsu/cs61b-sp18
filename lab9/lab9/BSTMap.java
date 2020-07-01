@@ -121,7 +121,11 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     @Override
     public V remove(K key) {
         V removed = get(key);
+        if (removed == null) {
+            return null;
+        }
         root = removeHelper(key, root);
+        size -= 1;
         return removed;
     }
 
@@ -142,7 +146,6 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
                 p.left = removeHelper(toPromote.key, p.left);
             }
         }
-        size -= 1;
         return p;
     }
 
