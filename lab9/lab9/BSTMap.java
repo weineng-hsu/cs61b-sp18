@@ -125,7 +125,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         return removed;
     }
 
-    public Node removeHelper(K key, Node p) {
+    public Node removeHelper(K key, Node node) {
+        /*
         if (p == null) {
             return null;
         } else if (key.compareTo(p.key) < 0) {
@@ -146,6 +147,43 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }
         size -= 1;
         return p;
+
+         */        if (key.compareTo(node.key) == 0) { // Deletion occurs in this `node`
+            switch (deleteCase(node)) {
+                case 1:         // Case 2 (with a single child on left)
+                    return node.left;
+                case 2:         // Case 2 (with a single child on right)
+                    return node.right;
+                case 3:         // Case 3 (with 2 children)
+                    Node maxNodeOnLeft = maxNode(node.left);
+                    K maxKeyOnLeft = maxNodeOnLeft.key;
+                    V maxValueOnLeft = maxNodeOnLeft.value;
+                    node.key = maxKeyOnLeft;
+                    node.value = maxValueOnLeft;
+                    node.left = removeHelper(maxKeyOnLeft, node.left);
+                    return node;
+                default:        // Case 0 (without any child)
+                    return null;
+            }
+        }
+        if (key.compareTo(node.key) < 0) {
+            node.left = removeHelper(key, node.left);
+        } else {
+            node.right = removeHelper(key, node.right);
+        }
+        return node;
+    }
+
+    private int deleteCase(Node node) {
+        if (node.left == null && node.right == null) {
+            return 0;
+        } else if (node.right == null) {
+            return 1;
+        } else if (node.left == null) {
+            return 2;
+        } else {
+            return 3;
+        }
     }
 
 
@@ -182,9 +220,9 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     public static void main(String[] args) {
         BSTMap<Integer, Integer> bstmap = new BSTMap<>();
         bstmap.put(8, 5);
-        //bstmap.put(7, 10);
+        bstmap.put(7, 10);
         //bstmap.remove(8, 5);
-        bstmap.remove(8, 5);
+        bstmap.remove(7);
         //bstmap.remove(7, 10);
         //System.out.println(bstmap.remove(8, 5));
         for (int i: bstmap) {
