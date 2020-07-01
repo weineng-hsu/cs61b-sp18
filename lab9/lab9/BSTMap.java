@@ -148,49 +148,6 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         return p;
     }
 
-    public void delete(K key) {
-        if (key == null) {
-            throw new IllegalArgumentException("calls delete() with a null key");
-        }
-        root = delete(root, key);
-    }
-
-    private Node delete(Node x, K key) {
-        if (x == null) {
-            return null;
-        }
-        int cmp = key.compareTo(x.key);
-        if (cmp < 0) {
-            x.left = delete(x.left, key);
-        } else if (cmp > 0) {
-            x.right = delete(x.right, key);
-        } else {
-            if (x.right == null) {
-                return x.left;
-            }
-            if (x.left  == null) {
-                return x.right;
-            }
-            Node t = x;
-            x = min(t.right);
-            x.right = deleteMin(t.right);
-            x.left = t.left;
-        }
-        return x;
-    }
-
-    public K min() {
-        return min(root).key;
-    }
-
-    private Node min(Node x) {
-        if (x.left == null) {
-            return x;
-        } else {
-            return min(x.left);
-        }
-    }
-
 
     private Node maxNode(Node p) {
         if (p == null) {
@@ -200,18 +157,6 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         } else {
             return maxNode(p.right);
         }
-    }
-
-    public void deleteMin() {
-        root = deleteMin(root);
-    }
-
-    private Node deleteMin(Node x) {
-        if (x.left == null) {
-            return x.right;
-        }
-        x.left = deleteMin(x.left);
-        return x;
     }
 
 
@@ -248,6 +193,9 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         bstmap.put(107, 94);
         //Set<String> keySet = bstmap.keySet();
         bstmap.remove(8, 5);
+        bstmap.remove(107, 94);
+        bstmap.remove(110, 94);
+        bstmap.remove(106, 94);
         //System.out.println(bstmap.remove(8, 5));
         for (int i: bstmap) {
             System.out.println(i);
