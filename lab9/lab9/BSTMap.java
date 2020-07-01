@@ -182,9 +182,10 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     public static void main(String[] args) {
         BSTMap<Integer, Integer> bstmap = new BSTMap<>();
         bstmap.put(8, 5);
-        bstmap.put(7, 10);
+        //bstmap.put(7, 10);
         //bstmap.remove(8, 5);
-        bstmap.remove(8);
+        bstmap.remove(8, 5);
+        //bstmap.remove(7, 10);
         //System.out.println(bstmap.remove(8, 5));
         for (int i: bstmap) {
             System.out.println(i);
