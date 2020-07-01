@@ -1,5 +1,6 @@
 package lab9;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -53,27 +54,53 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      */
     @Override
     public V get(K key) {
-        throw new UnsupportedOperationException();
+        int keyHash = hash(key);
+        return buckets[keyHash].get(key);
     }
 
-    /* Associates the specified value with the specified key in this map. */
+    /* Associates the specified value with the specified key in this map.*/
     @Override
     public void put(K key, V value) {
-        throw new UnsupportedOperationException();
+        if (loadFactor() > MAX_LF) {    //resize
+            ArrayMap<K, V>[] oldBuckets = buckets;
+            buckets = new ArrayMap[buckets.length * 2];
+            this.clear();
+            for (ArrayMap<K, V> oldBucket: oldBuckets) {
+                Set<K> keys = oldBucket.keySet();
+                for (K items: keys) {
+                    put(items, oldBucket.get(items));
+                }
+            }
+        }
+        int keyHash = hash(key);
+        buckets[keyHash].put(key, value);
+        size += 1;
     }
+
 
     /* Returns the number of key-value mappings in this map. */
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        int sum = 0;
+        for (ArrayMap i: buckets) {
+            sum += i.size();
+        }
+        return sum;
     }
+
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////
 
     /* Returns a Set view of the keys contained in this map. */
     @Override
     public Set<K> keySet() {
-        throw new UnsupportedOperationException();
+        Set<K> allItems = new HashSet<>();
+        for (ArrayMap<K, V> bucket: buckets) {
+            for (K item: bucket.keySet()) {
+                allItems.add(item);
+            }
+        }
+        return allItems;
     }
 
     /* Removes the mapping for the specified key from this map if exists.
@@ -81,7 +108,10 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      * UnsupportedOperationException. */
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        if (containsKey(key)) {
+            size -= 1;
+        }
+        return buckets[hash(key)].remove(key);
     }
 
     /* Removes the entry for the specified key only if it is currently mapped to
@@ -89,11 +119,53 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      * throw an UnsupportedOperationException.*/
     @Override
     public V remove(K key, V value) {
-        throw new UnsupportedOperationException();
+        if (value.equals(get(key))) {
+            size -= 1;
+            return buckets[hash(key)].remove(key);
+        }
+        return null;
     }
 
     @Override
     public Iterator<K> iterator() {
-        throw new UnsupportedOperationException();
+        return keySet().iterator();
+    }
+
+    public static  void main(String[] arg) {
+        MyHashMap<String, Integer> mhm = new MyHashMap<>();
+        mhm.put("Hello", 5);
+        mhm.put("This", 5);
+        mhm.put("is", 5);
+        mhm.put("test", 5);
+        mhm.put("test1", 5);
+        mhm.put("test2", 5);
+        mhm.put("test3", 5);
+        mhm.put("test4", 5);
+        mhm.put("test5", 5);
+        mhm.put("test6", 5);
+        mhm.put("test7", 5);
+        mhm.put("test8", 5);
+        mhm.put("test9", 5);
+        mhm.put("test10", 5);
+        mhm.put("test11", 5);
+        mhm.put("test12", 5);
+        mhm.put("test13", 5);
+        mhm.put("test14", 5);
+        mhm.put("test15", 5);
+        System.out.println(mhm.get("test"));
+        System.out.println(mhm.size());
+        System.out.println(mhm.keySet());
+        System.out.println(mhm.keySet().size());
+        System.out.println(mhm.remove("test15"));
+        System.out.println(mhm.size());
+        System.out.println(mhm.remove("test16"));
+        System.out.println(mhm.size());
+        System.out.println(mhm.remove("test14", 4));
+        System.out.println(mhm.remove("test14", 5));
+        System.out.println(mhm.size);
+        System.out.println(mhm.size());
+
+
     }
 }
+
