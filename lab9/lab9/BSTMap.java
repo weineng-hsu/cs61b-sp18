@@ -121,7 +121,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     @Override
     public V remove(K key) {
         V removed = get(key);
-        removeHelper(key, root);
+        root = removeHelper(key, root);
         return removed;
     }
 
@@ -183,19 +183,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         BSTMap<Integer, Integer> bstmap = new BSTMap<>();
         bstmap.put(8, 5);
         bstmap.put(7, 10);
-        //bstmap.put(9, 10);
-        bstmap.put(122, 22);
-        bstmap.put(120, 90);
-        bstmap.put(100, 94);
-        bstmap.put(106, 94);
-        bstmap.put(102, 94);
-        bstmap.put(110, 94);
-        bstmap.put(107, 94);
-        //Set<String> keySet = bstmap.keySet();
-        bstmap.remove(8, 5);
-        bstmap.remove(107, 94);
-        bstmap.remove(110, 94);
-        bstmap.remove(106, 94);
+        //bstmap.remove(8, 5);
+        bstmap.remove(8);
         //System.out.println(bstmap.remove(8, 5));
         for (int i: bstmap) {
             System.out.println(i);
