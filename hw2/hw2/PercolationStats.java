@@ -12,6 +12,8 @@ public class PercolationStats {
         if (N <= 0 || T <= 0) {
             throw new java.lang.IllegalArgumentException();
         }
+        this.N = N;
+        this.T = T;
         thresholds = new double[N];
         for (int i = 0; i < T; i++) {
             Percolation grids = pf.make(N);
