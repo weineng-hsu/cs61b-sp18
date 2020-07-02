@@ -4,11 +4,11 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
 
-    boolean[][] earth;
-    int side;
-    int openCount;
-    WeightedQuickUnionUF connectedGrids;
-    WeightedQuickUnionUF connectedGridsToTop;
+    private boolean[][] earth;
+    private int side;
+    private int openCount;
+    private WeightedQuickUnionUF connectedGrids;
+    private WeightedQuickUnionUF connectedGridsToTop;
 
 
     public Percolation(int N) {
@@ -45,7 +45,7 @@ public class Percolation {
 
     public void open(int row, int col) {
         if (!inputInGrid(row, col)) {
-            throw new java.lang.IllegalArgumentException();
+            throw new java.lang.IndexOutOfBoundsException();
         }
         if (earth[row][col]) {
             return;
@@ -88,12 +88,15 @@ public class Percolation {
 
     public boolean isOpen(int row, int col) {
         if (!inputInGrid(row, col)) {
-            throw new java.lang.IllegalArgumentException();
+            throw new java.lang.IndexOutOfBoundsException();
         }
         return earth[row][col];
     }
 
     public boolean isFull(int row, int col) {
+        if (!inputInGrid(row, col)) {
+            throw new java.lang.IndexOutOfBoundsException();
+        }
         return connectedGridsToTop.connected(xyTo1D(row, col), side * side);
     }
 
@@ -111,5 +114,9 @@ public class Percolation {
 
     public boolean percolates() {
         return connectedGrids.connected(side * side, side * side + 1);
+    }
+
+    public static void main(String[] args) {
+
     }
 }
