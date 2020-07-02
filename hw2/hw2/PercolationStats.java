@@ -12,8 +12,6 @@ public class PercolationStats {
         if (N <= 0 || T <= 0) {
             throw new java.lang.IllegalArgumentException();
         }
-        N = N;
-        T = T;
         for (int i = 0; i < T; i++) {
             Percolation grids = pf.make(N);
             while (!grids.percolates()) {
@@ -23,7 +21,8 @@ public class PercolationStats {
                     grids.open(ranX, ranY);
                 }
             }
-            thresholds[i] = grids.openCount;
+            double threshold = grids.numberOfOpenSites() / (N * N);
+            thresholds[i] = threshold;
         }
     }
 
