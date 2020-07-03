@@ -23,13 +23,13 @@ public class SimpleOomage implements Oomage {
         if (o.getClass() != this.getClass()) {
             return false;
         }
-        if (this.blue != ((SimpleOomage)o).blue) {
+        if (this.blue != ((SimpleOomage) o).blue) {
             return false;
         }
-        if (this.red != ((SimpleOomage)o).red) {
+        if (this.red != ((SimpleOomage) o).red) {
             return false;
         }
-        if (this.green != ((SimpleOomage)o).green) {
+        if (this.green != ((SimpleOomage) o).green) {
             return false;
         }
         return true;
