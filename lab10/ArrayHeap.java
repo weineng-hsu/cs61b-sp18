@@ -1,4 +1,7 @@
 import org.junit.Test;
+
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 /**
@@ -225,9 +228,18 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     @Override
     public void changePriority(T item, double priority) {
-        /* TODO: Your code here! */
-
-        return;
+        for (int i = 1; i <= size; i++) {
+            if (contents[i].item().equals(item)) {
+                double oldPriority = contents[i].myPriority;
+                contents[i] = new Node(item, priority);
+                if (priority < oldPriority) {
+                    swim(i);
+                } else if (priority > oldPriority) {
+                    sink(i);
+                }
+                return;
+            }
+        }
     }
 
     /**
@@ -455,10 +467,55 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         int i = 0;
         String[] expected = {"a", "b", "c", "c", "d", "d", "e", "g", "h", "i"};
         while (pq.size() > 1) {
-            pq.removeMin();
-            //assertEquals(expected[i], pq.removeMin());
+            assertEquals(expected[i], pq.removeMin());
             i += 1;
         }
     }
+
+    @Test
+    public void priorityChange() {
+        ExtrinsicPQ<String> pq = new ArrayHeap<>();
+        pq.insert("c", 3);
+        pq.insert("i", 9);
+        pq.insert("g", 2);      // Should be 7
+        pq.insert("d", 4);
+        pq.insert("a", 10);     // Should be 1
+        pq.insert("h", 8);
+        pq.insert("e", 5);
+        pq.insert("b", 7);      // Should be 2
+        pq.insert("c", 3);
+        pq.insert("d", 4);
+
+        // Modifies priorities
+        pq.changePriority("g", 7);
+        pq.changePriority("a", 1);
+        pq.changePriority("b", 2);
+
+        int i = 0;
+        String[] expected = {"a", "b", "c", "c", "d", "d", "e", "g", "h", "i"};
+        while (pq.size() > 1) {
+            assertEquals(expected[i], pq.removeMin());
+            i += 1;
+        }
+
+    }
+
+    @Test
+    public void testRandom() {
+        ExtrinsicPQ<Integer> pq = new ArrayHeap<>();
+        int n = 10000;
+        int[] priorities = new int[n];
+        for (int i = 0; i < n; i += 1) {
+            int priority = StdRandom.uniform(0, n);
+            priorities[i] = priority;
+            pq.insert(priority, priority);
+        }
+        Arrays.sort(priorities);
+
+        for (int i = 0; i < n; i += 1) {
+            assertEquals(priorities[i], (int) pq.removeMin());
+        }
+    }
+
 
 }
