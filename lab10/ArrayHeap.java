@@ -143,11 +143,13 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
                 rightSwap = true;
             }
         }
-        if (leftSwap) {
-            sink(leftIndex(index));
+        int leftID =  leftIndex(index);
+        int rightID = rightIndex(index);
+        if (leftSwap && inBounds(leftID)) {
+            sink(leftID);
         }
-        if (rightSwap) {
-            sink(rightIndex(index));
+        if (rightSwap && inBounds(rightID)) {
+            sink(rightID);
         }
 
     }
