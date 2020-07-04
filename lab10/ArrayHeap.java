@@ -28,7 +28,6 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
      */
     private static int leftIndex(int i) {
         return 2 * i;
-
     }
 
     /**
@@ -104,13 +103,15 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     private void swim(int index) {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
         validateSinkSwimArg(index);
+        if (parentIndex(index) == 0) {
+            return;
+        }
         if (min(parentIndex(index), (index)) == index) {
             swap(index, parentIndex(index));
         }
         if (parentIndex(index) > 1) {
             swim(parentIndex(index));
         }
-
     }
 
     /**
@@ -119,15 +120,14 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     private void sink(int index) {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
         validateSinkSwimArg(index);
-
-        if (min(index, leftIndex(index)) == leftIndex(index)) {
+        if (inBounds(leftIndex(index)) && min(index, leftIndex(index)) == leftIndex(index)) {
             swap(index, leftIndex(index));
-        }
-        else if (min(index, rightIndex(index)) == rightIndex(index)) {
+        } else if (inBounds(rightIndex(index)) && min(index, rightIndex(index)) == rightIndex(index)) {
             swap(index, rightIndex(index));
         }
-        if (leftIndex(index) < size || rightIndex(index) < size) {
+        if (inBounds(leftIndex(index))) {
             sink(leftIndex(index));
+        } else if (inBounds(rightIndex(index))) {
             sink(rightIndex(index));
         }
     }
