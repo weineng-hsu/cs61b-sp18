@@ -120,16 +120,36 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     private void sink(int index) {
         // Throws an exception if index is invalid. DON'T CHANGE THIS LINE.
         validateSinkSwimArg(index);
-        if (inBounds(leftIndex(index)) && min(index, leftIndex(index)) == leftIndex(index)) {
-            swap(index, leftIndex(index));
-        } else if (inBounds(rightIndex(index)) && min(index, rightIndex(index)) == rightIndex(index)) {
-            swap(index, rightIndex(index));
-        }
-        if (inBounds(leftIndex(index))) {
-            sink(leftIndex(index));
+        boolean leftSwap = false;
+        boolean rightSwap = false;
+        if (inBounds(leftIndex(index)) && inBounds(rightIndex(index))) {
+            if ( min(min(leftIndex(index), rightIndex(index)), index) == (min(leftIndex(index), rightIndex(index)))) {
+                if (min(leftIndex(index), rightIndex(index)) == leftIndex(index)) {
+                    swap(index, leftIndex(index));
+                    leftSwap = true;
+                } else {
+                    swap(index, rightIndex(index));
+                    rightSwap = true;
+                }
+            }
+        } else if (inBounds(leftIndex(index))) {
+            if ( min(leftIndex(index), index) == leftIndex(index) ) {
+                swap(index, leftIndex(index));
+                leftSwap = true;
+            }
         } else if (inBounds(rightIndex(index))) {
+            if ( min(rightIndex(index), index) == rightIndex(index) ) {
+                swap(index, rightIndex(index));
+                rightSwap = true;
+            }
+        }
+        if (leftSwap) {
+            sink(leftIndex(index));
+        }
+        if (rightSwap) {
             sink(rightIndex(index));
         }
+
     }
 
     /**
