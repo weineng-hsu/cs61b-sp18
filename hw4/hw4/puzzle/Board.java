@@ -116,6 +116,9 @@ public class Board implements WorldState {
             return false;
         }
         Board otherBoard = (Board) y;
+        if (n != otherBoard.n) {
+            return false;
+        }
         for (int row = 0; row < n; row += 1) {
             for (int column = 0; column < n; column += 1) {
                 if (otherBoard.board[row][column] !=  board[row][column]) {
