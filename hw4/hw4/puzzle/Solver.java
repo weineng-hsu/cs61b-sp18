@@ -1,26 +1,28 @@
 package hw4.puzzle;
 
-import edu.princeton.cs.algs4.BinaryIn;
 import edu.princeton.cs.algs4.MinPQ;
 
-import java.util.*;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.Comparator;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ArrayDeque;
 
 
 public class Solver {
 
-    protected class SearchNode {
-        SearchNode previous;
-        WorldState node;
-        int moves;
-        Integer priority;
+    private class SearchNode {
+        private SearchNode previous;
+        private WorldState node;
+        private int moves;
+        private Integer priority;
 
         private SearchNode(WorldState word, SearchNode prev) {
             node = word;
             previous = prev;
             moves = prev == null ? 0 : prev.moves + 1;
             if (priorityCash.containsKey(word)) {
-                priority = priorityCash.get(word) + moves ;
+                priority = priorityCash.get(word) + moves;
             } else {
                 int distance = word.estimatedDistanceToGoal();
                 priorityCash.put(word, distance);
@@ -29,7 +31,7 @@ public class Solver {
         }
     }
 
-    public class SearchNodeComparator implements Comparator<Solver.SearchNode> {
+    private class SearchNodeComparator implements Comparator<SearchNode> {
         @Override
         public int compare(Solver.SearchNode searchNode, Solver.SearchNode t1) {
             return searchNode.priority.compareTo(t1.priority);
@@ -39,25 +41,26 @@ public class Solver {
 
     private Map<WorldState, Integer> priorityCash = new HashMap<>();
     private Deque<WorldState> path = new ArrayDeque<>();
-    private SearchNode currNode;
+    private SearchNode curNod;
 
-    public Solver(WorldState Initial) {
-        currNode = new SearchNode(Initial, null);
-        MinPQ<SearchNode> queueToSearch = new MinPQ<>(new SearchNodeComparator());
+    public Solver(WorldState initial) {
+        curNod = new SearchNode(initial, null);
+        MinPQ<SearchNode> qToSearch = new MinPQ<>(new SearchNodeComparator());
 
-        while (!currNode.node.isGoal()) {
-            for (WorldState nearby: currNode.node.neighbors()) {
-                if (currNode.previous == null || !nearby.equals(currNode.previous.node)) {
-                    SearchNode toAddNode = new SearchNode(nearby, currNode);
-                    queueToSearch.insert(toAddNode);
+        while (!curNod.node.isGoal()) {
+            for (WorldState nearby: curNod.node.neighbors()) {
+                if (curNod.previous == null
+                        || !nearby.equals(curNod.previous.node)) {
+                    SearchNode toAddNode = new SearchNode(nearby, curNod);
+                    qToSearch.insert(toAddNode);
                 }
             }
-            currNode = queueToSearch.delMin();
+            curNod = qToSearch.delMin();
         }
 
-        while (currNode != null) {
-            path.push(currNode.node);
-            currNode = currNode.previous;
+        while (curNod != null) {
+            path.push(curNod.node);
+            curNod = curNod.previous;
         }
     }
 
@@ -68,5 +71,4 @@ public class Solver {
     public Iterable<WorldState> solution() {
         return path;
     }
-
 }
