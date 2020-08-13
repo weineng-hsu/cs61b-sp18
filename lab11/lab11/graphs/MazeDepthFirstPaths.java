@@ -15,7 +15,8 @@ public class MazeDepthFirstPaths extends MazeExplorer {
     private Maze maze;
 
 
-    public MazeDepthFirstPaths(Maze m, int sourceX, int sourceY, int targetX, int targetY) {
+    public MazeDepthFirstPaths(Maze m, int sourceX, int sourceY,
+                               int targetX, int targetY) {
         super(m);
         maze = m;
         s = maze.xyTo1D(sourceX, sourceY);

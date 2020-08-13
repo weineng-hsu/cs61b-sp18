@@ -20,7 +20,11 @@ public class MazeAStarPath extends MazeExplorer {
 
     /** Estimate of the distance from v to the target. */
     private int h(int v) {
-        return -1;
+        int vX = v % maze.N();
+        int vY = v / maze.N() + 1;
+        int tX = t % maze.N();
+        int tY = t / maze.N();
+        return Math.abs(vX - tX) + Math.abs(vY - tY);
     }
 
     /** Finds vertex estimated to be closest to target. */
