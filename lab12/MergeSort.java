@@ -1,4 +1,7 @@
+import edu.princeton.cs.algs4.Merge;
 import edu.princeton.cs.algs4.Queue;
+import junit.extensions.TestSetup;
+import org.junit.Test;
 
 public class MergeSort {
     /**
@@ -34,8 +37,13 @@ public class MergeSort {
     /** Returns a queue of queues that each contain one item from items. */
     private static <Item extends Comparable> Queue<Queue<Item>>
             makeSingleItemQueues(Queue<Item> items) {
-        // Your code here!
-        return null;
+        Queue<Queue<Item>> queueOfQueues = new Queue<>();
+        while (!items.isEmpty()) {
+            Queue<Item> itemQueue = new Queue<>();
+            itemQueue.enqueue(items.dequeue());
+            queueOfQueues.enqueue(itemQueue);
+        }
+        return queueOfQueues;
     }
 
     /**
@@ -53,14 +61,47 @@ public class MergeSort {
      */
     private static <Item extends Comparable> Queue<Item> mergeSortedQueues(
             Queue<Item> q1, Queue<Item> q2) {
-        // Your code here!
-        return null;
+        Queue<Item> merge = new Queue<>();
+        while (!q1.isEmpty() || !q2.isEmpty()) {
+            merge.enqueue(getMin(q1, q2));
+        }
+        return merge;
     }
 
-    /** Returns a Queue that contains the given items sorted from least to greatest. */
+    /** Returns a Queue that contains the given items sorted from least to greatest.*/
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
-        // Your code here!
-        return items;
+        if (items.size() <= 1) {
+            return items;
+        }
+        Queue<Queue<Item>> itemQs = makeSingleItemQueues(items);
+        int low = itemQs.size() / 2;
+        int high = itemQs.size();
+        Queue<Item> mergeLeft = new Queue<>();
+        Queue<Item> mergeRight = new Queue<>();
+        for (int i = 0; i < low; i += 1) {
+            mergeLeft.enqueue(itemQs.dequeue().dequeue());
+        }
+        for (int j = low; j < high; j += 1) {
+            mergeRight.enqueue(itemQs.dequeue().dequeue());
+        }
+        mergeLeft = mergeSort(mergeLeft);
+        mergeRight = mergeSort(mergeRight);
+        return mergeSortedQueues(mergeLeft, mergeRight);
+    }
+
+    public static void main(String[] args) {
+        Queue<String> languages = new Queue<>();
+        languages.enqueue("Python");
+        languages.enqueue("SQL");
+        languages.enqueue("Java");
+        languages.enqueue("Julia");
+        languages.enqueue("JavaScripts");
+        languages.enqueue("Lisp??");
+        languages.enqueue("Lisp??");
+        Queue<String> sortedLanguages = MergeSort.mergeSort(languages);
+
+        System.out.println(languages.toString());
+        System.out.println(sortedLanguages.toString());
     }
 }
