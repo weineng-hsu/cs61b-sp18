@@ -72,9 +72,9 @@ public class QuickSort {
         partition(items, pivot, less, equal, greater);
         less = quickSort(less);
         greater = quickSort(greater);
-        items = catenate(less, equal);
-        items = catenate(less, greater);
-        return items;
+        Queue<Item> sortedItems = catenate(less, equal);
+        sortedItems = catenate(sortedItems, greater);
+        return sortedItems;
 
     }
 
